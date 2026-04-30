@@ -2,11 +2,9 @@
   "name": "daniel-portfolio",
   "version": "1.0.0",
   "description": "Adegbuyi Daniel - Virtual Assistant & Front-End Developer Portfolio",
-  "main": "public/index.html",
+  "main": "index.html",
   "scripts": {
-    "build": "echo 'Static site - no build needed' && echo 'Files are already in public directory'",
-    "dev": "echo 'Static site - run with any local server'",
-    "start": "npx serve public"
+    "build": "node -e \"const fs = require('fs'); const path = require('path'); if (!fs.existsSync('dist')) fs.mkdirSync('dist'); fs.copyFileSync('index.html', 'dist/index.html'); const files = fs.readdirSync('.').filter(f => f.endsWith('.png')); files.forEach(f => fs.copyFileSync(f, path.join('dist', f)))\""
   },
   "keywords": [
     "portfolio",
@@ -15,8 +13,5 @@
     "web-development"
   ],
   "author": "Adegbuyi Daniel",
-  "license": "MIT",
-  "devDependencies": {
-    "serve": "^14.2.0"
-  }
+  "license": "MIT"
 }
