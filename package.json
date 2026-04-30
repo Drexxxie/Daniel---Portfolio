@@ -1,0 +1,22 @@
+{
+  "name": "daniel-portfolio",
+  "version": "1.0.0",
+  "description": "Adegbuyi Daniel - Virtual Assistant & Front-End Developer Portfolio",
+  "main": "public/index.html",
+  "scripts": {
+    "build": "echo 'Static site - no build needed' && echo 'Files are already in public directory'",
+    "dev": "echo 'Static site - run with any local server'",
+    "start": "npx serve public"
+  },
+  "keywords": [
+    "portfolio",
+    "virtual-assistant",
+    "front-end-developer",
+    "web-development"
+  ],
+  "author": "Adegbuyi Daniel",
+  "license": "MIT",
+  "devDependencies": {
+    "serve": "^14.2.0"
+  }
+}
