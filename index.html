@@ -1761,7 +1761,7 @@
           </div>
         </div>
         <div class="fade-right">
-          <form class="contact-form" id="contactForm" action="https://formspree.io/f/meenjykw" method="POST">
+          <form class="contact-form" id="contactForm">
             <div class="form-row">
               <div class="form-group" style="margin-bottom:0">
                 <label for="name">Your Name</label>
@@ -1880,7 +1880,18 @@
     }
 
     // Contact form - Formspree integration
-    document.getElementById('contactForm').addEventListener('submit', function (e) {
+    document.getElementById('contactForm').addEventListener('submit', async function (e) {
+      e.preventDefault();
+      
+      const name = document.getElementById('name').value.trim();
+      const email = document.getElementById('email').value.trim();
+      const message = document.getElementById('message').value.trim();
+      
+      if (!name || !email || !message) {
+        showToast('Please fill in all fields.', 'error');
+        return;
+      }
+      
       const btn = document.getElementById('submitBtn');
       const originalText = btn.innerHTML;
       
@@ -1888,9 +1899,35 @@
       btn.disabled = true;
       btn.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" style="animation:spin 1s linear infinite"><path d="M21 12a9 9 0 1 1-6.219-8.56"/></svg> Sending...';
       
-      // Formspree will handle the submission
-      // The page will redirect to Formspree's success/thank you page
-      // or show an error if something goes wrong
+      try {
+        const response = await fetch('https://formspree.io/f/xyzyzzyz', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json'
+          },
+          body: JSON.stringify({
+            name: name,
+            email: email,
+            message: message,
+            _subject: 'New message from portfolio contact form'
+          })
+        });
+        
+        if (response.ok) {
+          this.reset();
+          showToast("Message sent! I'll get back to you soon.", 'success');
+        } else {
+          throw new Error('Form submission failed');
+        }
+      } catch (error) {
+        showToast('Failed to send message. Please try again.', 'error');
+        console.error('Form submission error:', error);
+      } finally {
+        // Reset button state
+        btn.disabled = false;
+        btn.innerHTML = originalText;
+      }
     });
   </script>
   <style>
